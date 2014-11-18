@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="banner">#ff5c1403</color>
+    <color name="white_whiskey">#ffb7131d</color>
+    <color name="gin">#ff033f7e</color>
+    <color name="vodka">#ff6a5041</color>
+    <color name="banner_light">#ffb5141d</color>
+    <color name="black">#ff000000</color>
+    <color name="background">#fffeb723</color>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/banner</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/banner_light</item>
+    </style>
+
+    <style name="Widget.DrawewrSytle" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:columnWidth">200dp</item>
+        <item name="android:numColumns">auto_fit</item>
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:horizontalSpacing">0dp</item>
+        <item name="android:verticalSpacing">0dp</item>
+    </style>
+
+</resources>
