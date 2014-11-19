@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomePage extends Fragment {
+public class OurSpirits extends Fragment {
 
     public static Fragment newInstance(Context context) {
-        HomePage f = new HomePage();
+        OurSpirits f = new OurSpirits();
         return f;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.home_page, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.our_spirits, null);
         return root;
     }
 

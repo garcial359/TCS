@@ -3,6 +3,8 @@ package com.chf.thecentralstandard;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,14 +19,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
-
-    private DrawerLayout mDrawerLayout;
-    private String[] mMenuItems;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle drawerListener;
-    private MyAdapter myAdapter;
+    public DrawerLayout mDrawerLayout;
+    public ListView mDrawerList;
+    public MyAdapter myAdapter;
+    public ActionBarDrawerToggle drawerListener;
+    public String[] mMenuItems;
+    public String[] fragmentPages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         mMenuItems = getResources().getStringArray(R.array.menu_items);
+        fragmentPages = getResources().getStringArray(R.array.fragment_pages);
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mMenuItems);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.lvDrawer);
         myAdapter = new MyAdapter(this);
-//      mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mMenuItems));
         mDrawerList.setAdapter(myAdapter);
+
         drawerListener = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
@@ -52,10 +55,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 super.onDrawerClosed(drawerView);
             }
         };
+
         mDrawerLayout.setDrawerListener(drawerListener);
         mDrawerList.setOnItemClickListener(this);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[0]));
+        tx.commit();
 
     }
 
@@ -93,8 +100,18 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectItem(position);
+    public void onItemClick(AdapterView<?> parent, View view, final int pos, long id) {
+        selectItem(pos);
+        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+                tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[pos]));
+                tx.commit();
+            }
+        });
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     private void selectItem(int position) {
@@ -111,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 class MyAdapter extends BaseAdapter {
     Context context;
     String[] menuItems;
-    int[] menuImages = {R.drawable.ic_launcher, R.drawable.bottle_icon, R.drawable.tour_icon,
+    int[] menuImages = {R.drawable.ic_launcher, R.drawable.bottle_icon, R.drawable.ticket_icon,
             R.drawable.ic_action_event, R.drawable.ic_action_about, R.drawable.ic_action_call};
 
     public MyAdapter(Context context) {

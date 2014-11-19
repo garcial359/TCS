@@ -2,8 +2,21 @@
 <resources>
 
     <string name="app_name">The Central Standard</string>
+    <string name="head_distiller">The Head Distiller</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="about_blaze">Brian “Blaze” Blazel was born and raised in Eau Claire,
+        Wisconsin. He moved to Milwaukee in 2006 to pursue a degree in Mechanical Engineering.
+        While in Milwaukee, his passion for local craft food and drinks developed.
+        One of the local craft products he was drawn to was Milwaukee Brewing Company beers.
+        With persistence and a hefty amount of pestering, he was given the opportunity to work on the bottling line for MKE in early 2011.
+        Blaze quickly worked his way up to brewer by the end of the year.
+        \n \n
+        It is his work ethic and openness to new challenges that led to the opportunity to become a professional distiller.
+        An ever increasing interest in artisan food and drink along with his background in engineering and brewing,
+        drives Blaze to stay true to spirit styles while innovating and putting his own flare into it.
+        \n \n In his free time, he enjoys restoring and riding vintage mopeds, spending time with family and friends,
+        and an occasional pour of whiskey. </string>
     <string name="address">613 South 2nd Street\n
 Milwaukee, WI</string>
     <string name="hours">Monday-Tuesday - closed for production\n
@@ -32,8 +45,17 @@ Sunday -  12pm-7pm</string>
         <item>About</item>
         <item>Contact</item>
     </string-array>
+    <string-array name="fragment_pages">
+        <item>com.chf.thecentralstandard.HomePage</item>
+        <item>com.chf.thecentralstandard.OurSpirits</item>
+        <item>com.chf.thecentralstandard.Tours</item>
+        <item>com.chf.thecentralstandard.Events</item>
+        <item>com.chf.thecentralstandard.About</item>
+        <item>com.chf.thecentralstandard.Contacts</item>
+    </string-array>
 
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_our_spirits">OurSpirits</string>
 
 </resources>
