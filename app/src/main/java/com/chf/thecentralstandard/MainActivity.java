@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public ActionBarDrawerToggle drawerListener;
     public String[] mMenuItems;
     public String[] fragmentPages;
+    public String appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         mMenuItems = getResources().getStringArray(R.array.menu_items);
         fragmentPages = getResources().getStringArray(R.array.fragment_pages);
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mMenuItems);
+        appName = getResources().getString(R.string.app_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.lvDrawer);
         myAdapter = new MyAdapter(this);
         mDrawerList.setAdapter(myAdapter);
+
 
         drawerListener = new ActionBarDrawerToggle(
                 this,
@@ -58,12 +61,38 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         mDrawerLayout.setDrawerListener(drawerListener);
         mDrawerList.setOnItemClickListener(this);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[0]));
-        tx.commit();
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+        if (findViewById(R.id.flContent) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+        }
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[0]))
+                    .commit();
+        }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            setTitle(getSupportFragmentManager().getBackStackEntryAt((getSupportFragmentManager().getBackStackEntryCount()) - 1).getName());
+        } else {
+            setTitle(appName);
+        }
     }
 
     @Override
@@ -85,17 +114,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (drawerListener.onOptionsItemSelected(item)) {
-
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -106,12 +129,15 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-                tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[pos]));
-                tx.commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentPages[pos]))
+                        .addToBackStack(mMenuItems[pos])
+                        .commit();
             }
         });
         mDrawerLayout.closeDrawer(mDrawerList);
+
     }
 
     private void selectItem(int position) {
