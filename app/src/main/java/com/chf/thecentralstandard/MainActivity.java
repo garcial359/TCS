@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,11 +41,15 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerList = (ListView) findViewById(R.id.lvDrawer);
         myAdapter = new MyAdapter(this);
         mDrawerList.setAdapter(myAdapter);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(toolbar);
 
         drawerListener = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
+                toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close) {
             @Override
@@ -62,9 +66,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerLayout.setDrawerListener(drawerListener);
         mDrawerList.setOnItemClickListener(this);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerListener.syncState();
 
         if (findViewById(R.id.flContent) != null) {
             if (savedInstanceState != null) {
@@ -104,7 +108,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        drawerListener.syncState();
+
     }
 
     @Override
@@ -137,7 +141,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             }
         });
         mDrawerLayout.closeDrawer(mDrawerList);
-
     }
 
     private void selectItem(int position) {

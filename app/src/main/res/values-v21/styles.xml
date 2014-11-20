@@ -5,5 +5,6 @@
         <item name="android:colorPrimary">@color/banner</item>
         <item name="android:colorPrimaryDark">@color/banner</item>
         <item name="android:colorAccent">@color/banner_light</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 </resources>
