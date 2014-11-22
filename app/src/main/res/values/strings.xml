@@ -46,6 +46,12 @@ Sunday -  12pm-7pm</string>
         <item>Contact</item>
     </string-array>
 
+    <string-array name="requested_tours_options">
+        <item></item>
+        <item>I would like a customized tour</item>
+        <item>The Craft Spirits Tour of Central Standard Craft Distillery</item>
+    </string-array>
+
     <string-array name="fragment_pages">
         <item>com.chf.thecentralstandard.HomePage</item>
         <item>com.chf.thecentralstandard.OurSpirits</item>
@@ -54,6 +60,10 @@ Sunday -  12pm-7pm</string>
         <item>com.chf.thecentralstandard.About</item>
         <item>com.chf.thecentralstandard.Contact</item>
     </string-array>
+
+    <string name="contact_email_message" formatted="false">Dear Central Standard, \n\nI selected \"%s\" on the requested date \"%s\".
+        Please reply to my following message at email address %s.  \n\n\"%s\"
+     \n\nSincerely, \n\n\n%s </string>
 
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
